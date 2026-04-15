@@ -4,24 +4,27 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import Optional
+from huggingface_hub import hf_hub_download
 import joblib
 import json
 import numpy as np
 import pandas as pd
-from pathlib import Path
 
-# --- Load artifacts ---
-BASE = Path(__file__).parent
-churn_model   = joblib.load(BASE / 'models' / 'churn_model.pkl')
-feature_cols  = joblib.load(BASE / 'models' / 'feature_cols.pkl')
-km_curves     = joblib.load(BASE / 'models' / 'km_curves.pkl')
-shap_df       = pd.read_csv(BASE / 'models' / 'shap_importance.csv')
-subscribers   = pd.read_csv(BASE / 'models' / 'subscriber_features.csv')
+HF_REPO = "Darakhshannazir/Netflix-streaming-subscriber-ltv-model"
 
-with open(BASE / 'models' / 'markov_params.json') as f:
+print("Loading models from Hugging Face Hub...")
+
+churn_model  = joblib.load(hf_hub_download(repo_id=HF_REPO, filename="churn_model.pkl"))
+feature_cols = joblib.load(hf_hub_download(repo_id=HF_REPO, filename="feature_cols.pkl"))
+km_curves    = joblib.load(hf_hub_download(repo_id=HF_REPO, filename="km_curves.pkl"))
+shap_df      = pd.read_csv(hf_hub_download(repo_id=HF_REPO, filename="shap_importance.csv"))
+subscribers  = pd.read_csv(hf_hub_download(repo_id=HF_REPO, filename="subscriber_features.csv"))
+
+with open(hf_hub_download(repo_id=HF_REPO, filename="markov_params.json")) as f:
     markov_params = json.load(f)
 
-# --- App ---
+print("✓ All models loaded")
+
 app = FastAPI(
     title       = "StreamVault LTV API",
     description = "Netflix-methodology iLTV scoring — Markov chain + XGBoost",
