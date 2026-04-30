@@ -2,7 +2,7 @@
 
 A production-grade product data science system that computes Incremental Lifetime Value (iLTV) for streaming subscribers using a Netflix-inspired Markov chain methodology, XGBoost churn prediction, and Kaplan-Meier survival analysis.
 
-Live Dashboard: https://huggingface.co/spaces/Darakhshannazir/Netflix-streaming-subscriber-ltv-dashboard
+Live Dashboard: [https://huggingface.co/spaces/Darakhshannazir/Netflix-streaming-subscriber-ltv-dashboard](https://streaming-subscriber-ltv-system-rdphhhwfglfst4egcg6vxa.streamlit.app/)
 Live API: https://huggingface.co/spaces/Darakhshannazir/Netflix-streaming-subscriber-ltv-api
 
 ---
